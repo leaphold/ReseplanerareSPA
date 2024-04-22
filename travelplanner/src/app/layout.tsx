@@ -25,6 +25,9 @@ export default function RootLayout({
             {children}
           </div>
         </main>
+
+        // Footer component goes here
+        
       </body>
     </html>
   );
