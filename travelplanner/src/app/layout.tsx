@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        
         // Header component goes here
 
         <main className={styles.main}>
@@ -27,7 +28,7 @@ export default function RootLayout({
         </main>
 
         // Footer component goes here
-        
+
       </body>
     </html>
   );
