@@ -34,6 +34,13 @@
     #00000080
   );
 
+
+
+.headerLink:hover{
+  color: #ff8b8a;
+}
+
+
   --callout-rgb: 238, 240, 241;
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
