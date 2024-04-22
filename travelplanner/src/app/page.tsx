@@ -1,6 +1,9 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import 'react-datepicker/dist/react-datepicker.css';
+import createDatabase from "@/data/db";
+
+createDatabase();
 
 export default function Home() {
   return (

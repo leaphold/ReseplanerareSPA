@@ -13,8 +13,8 @@ function Header() {
       width={374}
       height={134}
       />
-      <Link href="/myTravels" > <h2 className="headerLink">My Travels</h2></Link>
-      <Link href="/planTavels" > <h2 className="headerLink">Plan Travels</h2></Link>
+      <Link href="/mytravels" > <h2 className="headerLink">My Travels</h2></Link>
+      <Link href="/plantravels" > <h2 className="headerLink">Plan Travels</h2></Link>
     </header>
   );
 }
