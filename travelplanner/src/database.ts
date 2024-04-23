@@ -1,7 +1,13 @@
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
+interface User {
+    name: string;
+    email: string;
+}
+
 interface Travel {
     id?: number;
+    user: User;
     city: string;
     dateRange: { start: Date, end: Date };
     activity: string[];
