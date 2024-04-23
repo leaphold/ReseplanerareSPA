@@ -2,6 +2,8 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import 'react-datepicker/dist/react-datepicker.css';
 import createDatabase from "@/data/db";
+import ActivityList from "../components/ActivityList/ActivityList"
+
 
 createDatabase().then(() => {
   console.log('Database has been created');
@@ -21,7 +23,7 @@ export default function Home() {
     </p>
     
     <hr/>
-    
+   <ActivityList /> 
   </>
   );
 }
