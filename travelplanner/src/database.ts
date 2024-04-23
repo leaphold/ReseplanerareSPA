@@ -4,7 +4,7 @@ interface Travel {
     id?: number;
     city: string;
     dateRange: { start: Date, end: Date };
-    activity: string;
+    activity: string[];
     nights: number;
     notes: string;
 }
