@@ -3,12 +3,16 @@ import styles from "./page.module.css";
 import 'react-datepicker/dist/react-datepicker.css';
 import createDatabase from "@/data/db";
 
-createDatabase();
+createDatabase().then(() => {
+  console.log('Database has been created');
+}).catch((error) => {
+  console.error('Failed to create database:', error)
+});
 
 export default function Home() {
   return (
     <>
-    <h2>Home</h2>
+    <h2>Lagom Travels</h2>
     
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. 

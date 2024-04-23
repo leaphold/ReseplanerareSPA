@@ -1,0 +1,53 @@
+[
+    {
+      "name": "Stockholm",
+      "activities": ["Besöka Gamla stan", "Utforska Skansen", "Ta en båttur i skärgården"],
+      "overnight_cost": "1000 SEK"
+    },
+    {
+      "name": "Göteborg",
+      "activities": ["Besöka Liseberg nöjespark", "Utforska Universeum", "Promenera i Slottsskogen"],
+      "overnight_cost": "800 SEK"
+    },
+    {
+      "name": "Malmö",
+      "activities": ["Besöka Turning Torso", "Utforska Malmöhus slott", "Gå längs Ribersborgsstranden"],
+      "overnight_cost": "700 SEK"
+    },
+    {
+      "name": "Uppsala",
+      "activities": ["Besöka Uppsala domkyrka", "Utforska Gamla Uppsala gravfält", "Ta en cykeltur längs Fyrisån"],
+      "overnight_cost": "600 SEK"
+    },
+    {
+      "name": "Västerås",
+      "activities": ["Besöka Västerås domkyrka", "Utforska Vallby Friluftsmuseum", "Ta en båttur på Mälaren"],
+      "overnight_cost": "550 SEK"
+    },
+    {
+      "name": "Örebro",
+      "activities": ["Besöka Örebro slott", "Utforska Wadköping", "Gå längs Svartån"],
+      "overnight_cost": "600 SEK"
+    },
+    {
+      "name": "Linköping",
+      "activities": ["Besöka Gamla Linköping", "Utforska Flygvapenmuseum", "Ta en promenad längs Stångån"],
+      "overnight_cost": "550 SEK"
+    },
+    {
+      "name": "Helsingborg",
+      "activities": ["Besöka Sofiero slott och slottsträdgård", "Utforska Dunkers kulturhus", "Ta färjan till Helsingör, Danmark"],
+      "overnight_cost": "700 SEK"
+    },
+    {
+      "name": "Jönköping",
+      "activities": ["Besöka Husqvarna Museum", "Utforska Rosenlunds Rosarium", "Ta en båttur på Vättern"],
+      "overnight_cost": "600 SEK"
+    },
+    {
+      "name": "Norrköping",
+      "activities": ["Besöka Industrilandskapet", "Utforska Arbetets museum", "Promenera längs Motala ström"],
+      "overnight_cost": "550 SEK"
+    }
+  ]
+  
