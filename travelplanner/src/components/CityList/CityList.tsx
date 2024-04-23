@@ -1,13 +1,13 @@
 import React from 'react';
-import cities from './data/cities.json';
+import cities from '@/data/cities.json';
 
-const CityList=()=>{
-    return(
-        <ul>
-            {cities.map((city, index) =>(
-                <li key={index}>{city.name}</li>
+const CityList = ({ handleCityChange }: { handleCityChange: (event: React.ChangeEvent<HTMLSelectElement>) => void }) => {
+    return (
+        <select onChange={handleCityChange}>
+            {cities.map((city, index) => (
+                <option key={index} value={city.name}>{city.name}</option>
             ))}
-        </ul>
+        </select>
     );
 }
 

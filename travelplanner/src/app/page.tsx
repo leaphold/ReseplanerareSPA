@@ -1,17 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import 'react-datepicker/dist/react-datepicker.css';
-import createDatabase from "@/data/db";
 
-createDatabase().then(() => {
-  console.log('Database has been created');
-}).catch((error) => {
-  console.error('Failed to create database:', error)
-});
-
-export default function Home() {
+export default function Home() {  
   return (
     <>
+      
     <h2>Lagom Travels</h2>
     
     <p>
