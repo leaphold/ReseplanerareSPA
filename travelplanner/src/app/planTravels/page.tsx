@@ -1,7 +1,7 @@
 'use client'
 
 import styles from "./page.module.css"
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { useCookies } from "react-cookie";
 import DateRangePicker from "@/components/DateRangePicker/DateRangePicker";
 import NightsCounter from "@/components/NightsCounter/NightsCounter";
@@ -9,13 +9,17 @@ import CityList from "@/components/CityList/CityList";
 import ActivityList from "@/components/ActivityList/ActivityList";
 import {addTravel} from "@/database";
 
-
 export default function PlanTravels() {
   // cookie
   const [cookies, setCookie] = useCookies(['user'])
+  const [showUserForm, setShowUserForm] = useState(true);
+
+  // Updates state on client after mount
+  useEffect(() => {
+    setShowUserForm(!cookies.user);
+  }, [cookies.user]);
   
-  // useStates
-  const [showUserForm, setShowUserForm] = useState(!cookies.user)
+  // useStates 
   const [selectedCity, setSelectedCity] = useState('Stockholm');
   const [dateRange, setDateRange] = useState({ start: new Date(), end: new Date() });
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
@@ -100,7 +104,7 @@ export default function PlanTravels() {
         <h2>Plan Travels</h2>
 
         <form onSubmit={handleSubmit}>
-          <h3>Where are you going?</h3>
+          <h3>Where are you going {cookies.user.name}?</h3>
           <CityList handleCityChange={handleCityChange}/>
 
           <h3>When will you be there?</h3>
