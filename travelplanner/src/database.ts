@@ -43,4 +43,9 @@ async function getAllTravels(): Promise<Travel[]> {
     return db.getAll('travels');
 }
 
-export { addTravel, getAllTravels };
+async function deleteTravel(id: number): Promise<void> {
+  const db = await createDatabase();
+  return db.delete('travels', id);
+}
+
+export { addTravel, getAllTravels, deleteTravel };
