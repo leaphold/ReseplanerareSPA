@@ -18,7 +18,7 @@ export default function ListMyTravels() {
         if (cookies.user) {
             getAllTravels().then((allTravels) => {
                 const userTravels = allTravels.filter(
-                    (travel) => travel.user.email === cookies.user.email
+                    (travel) => travel.user?.email === cookies.user.email
                 );
                 setTravels(userTravels);
             });
