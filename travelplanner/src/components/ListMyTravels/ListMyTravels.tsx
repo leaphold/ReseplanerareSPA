@@ -2,14 +2,19 @@ import React from 'react';
 import { useCookies } from "react-cookie";
 import {getAllTravels} from "@/database";
 import DeleteMyTravels from '../DeleteMyTravels/DeleteMyTravels';
+import UserForm from '../UserForm/UserForm';
+import { useState } from 'react';
+
 
 export default function ListMyTravels() {
   // cookie
-  const [cookies] = useCookies(['user'])
-  
+  const [cookies, setCookie] = useCookies(['user'])
+
   // useStates
   const [travels, setTravels] = React.useState<any[]>([]);
-  
+  const [Deletemessage,setShowDeleteMessage] = useState('');
+
+
   // Handles show form if user is not present
   React.useEffect(() => {
     if (cookies.user) {
@@ -22,13 +27,21 @@ export default function ListMyTravels() {
 
   const handleDelete = (id: number) => {
     setTravels(travels.filter(travel => travel.id !== id));
-  console.log('delete', id)
-
+    setShowDeleteMessage('Travel Deleted'); 
+    setTimeout(() => { setShowDeleteMessage('')}, 3000);
   }
-  
+
+  const handleUserSubmit = (user: {name: string, email: string}) => {
+    setCookie('user', user, { path: '/' });
+  }
+
   return (
     <div>
-      <h1>My Travels</h1>
+      <h1>My Planned Travels</h1>
+      <h2>Traveler: {cookies.user?.name} </h2>
+      <h2>Email: {cookies.user?.email}</h2>
+      <h2>{Deletemessage}</h2>
+      {!cookies.user && <UserForm onUserSubmit={handleUserSubmit} />}
       <ul>
         {travels.map(travel => (
           <li key={travel.id}>
@@ -43,4 +56,4 @@ export default function ListMyTravels() {
       </ul>
     </div>
   )
-}
+  }

@@ -25,7 +25,8 @@ export default function PlanTravels() {
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [nights, setNights] = useState(1);
   const [notes, setNotes] = useState('');
-  
+  const [saveMessage, setSaveMessage]= useState('');  
+
   // Handles show form if user is not present
   const handleUserFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -79,8 +80,13 @@ export default function PlanTravels() {
       nights, dateRange, 
       notes 
     }
+
     addTravel(travelPlan).then(id => {
       console.log('Added: ', id);
+      setSaveMessage('Travel plan saved!');
+   setTimeout(() => {
+      setSaveMessage('');
+    }, 3000);
     });
   }
 
@@ -101,8 +107,8 @@ export default function PlanTravels() {
 
         ) : (
           <>  
+        {saveMessage && <p>{saveMessage}</p>} {/* <-- Add this line */}
         <h2>Plan Travels</h2>
-
         <form onSubmit={handleSubmit}>
           <h3>Where are you going {cookies.user.name}?</h3>
           <CityList handleCityChange={handleCityChange}/>
