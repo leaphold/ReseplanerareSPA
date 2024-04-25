@@ -92,6 +92,7 @@ export default function PlanTravels() {
             setSaveMessage("Travel plan saved!");
             setTimeout(() => {
                 setIsSaved(false);
+                setSaveMessage("");
             }, 3000);
         });
     };
