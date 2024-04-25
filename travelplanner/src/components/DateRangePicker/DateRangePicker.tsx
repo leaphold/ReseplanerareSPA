@@ -25,7 +25,6 @@ export default function DateRangePicker({
             const diffInTime = endDate.getTime() - startDate.getTime();
             const diffInDays = diffInTime / (1000 * 3600 * 24);
             const nights = Math.ceil(diffInDays);
-            console.log("Calculated nights: ", nights);
             handleNightsChange(nights);
         }
     }, [startDate, endDate, handleNightsChange]);

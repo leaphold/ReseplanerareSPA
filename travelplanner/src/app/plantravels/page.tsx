@@ -23,8 +23,9 @@ export default function PlanTravels() {
     const [selectedCity, setSelectedCity] = useState("Stockholm");
     const [dateRange, setDateRange] = useState({ start: new Date(), end: new Date() });
     const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
-    const [nights, setNights] = useState(1);
+    const [nights, setNights] = useState(0);
     const [notes, setNotes] = useState("");
+    const [isSaved, setIsSaved] = useState(false);
 
     // Handles show form if user is not present
     const handleUserFormSubmit = (event: React.FormEvent) => {
@@ -40,24 +41,22 @@ export default function PlanTravels() {
         setSelectedCity(() => event.target.value);
         setDateRange(() => ({ start: new Date(), end: new Date() }));
         setSelectedActivities(() => []);
-        setNights(() => 1);
+        setNights(() => 0);
         setNotes(() => "");
+        setIsSaved(() => false);
     };
 
     const handleDateRangeChange = useCallback((range: { start: Date; end: Date }) => {
-        console.log("Date range changed: ", range);
         setDateRange(range);
         if (range.start && range.end) {
             const diffInTime = range.end.getTime() - range.start.getTime();
             const diffInDays = diffInTime / (1000 * 3600 * 24);
             const nights = Math.ceil(diffInDays);
-            console.log("Updating nights due to date range change: ", nights);
             setNights(nights);
         }
     }, []);
 
     const handleNightsChange = (nights: number) => {
-        console.log("Nights updated: ", nights);
         setNights(nights);
     };
 
@@ -86,9 +85,12 @@ export default function PlanTravels() {
             dateRange,
             notes,
         };
-        console.log("Submitting travel plan: ", travelPlan);
+
         addTravel(travelPlan).then((id) => {
-            console.log("Added: ", id);
+            setIsSaved(true);
+            setTimeout(() => {
+                setIsSaved(false);
+            }, 3000);
         });
     };
 
@@ -133,13 +135,12 @@ export default function PlanTravels() {
                             key={`nightsCounter-${selectedCity}`}
                             selectedCity={selectedCity}
                             nights={nights}
-                            handleNightsChange={handleNightsChange}
                         />
 
                         <h3>Notes for your trip.</h3>
                         <textarea key={selectedCity} onChange={handleNotesChange}></textarea>
                         <br />
-                        <button type="submit">Save</button>
+                        <button type="submit">{isSaved ? "Saved" : "Save"}</button>
                     </form>
                 </>
             )}
