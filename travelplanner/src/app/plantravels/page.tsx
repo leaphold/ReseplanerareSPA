@@ -26,6 +26,7 @@ export default function PlanTravels() {
     const [nights, setNights] = useState(0);
     const [notes, setNotes] = useState("");
     const [isSaved, setIsSaved] = useState(false);
+    const [saveMessage, setSaveMessage] = useState("");
 
     // Handles show form if user is not present
     const handleUserFormSubmit = (event: React.FormEvent) => {
@@ -88,6 +89,7 @@ export default function PlanTravels() {
 
         addTravel(travelPlan).then((id) => {
             setIsSaved(true);
+            setSaveMessage("Travel plan saved!");
             setTimeout(() => {
                 setIsSaved(false);
             }, 3000);
@@ -111,7 +113,7 @@ export default function PlanTravels() {
             ) : (
                 <>
                     <h2>Plan Travels</h2>
-
+                    {saveMessage && <p>{saveMessage}</p>}
                     <form onSubmit={handleSubmit}>
                         <h3>Where are you going {cookies.user.name}?</h3>
                         <CityList handleCityChange={handleCityChange} />
