@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import ListMyTravels from "@/components/ListMyTravels/ListMyTravels";
 

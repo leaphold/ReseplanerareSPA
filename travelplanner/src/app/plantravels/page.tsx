@@ -1,128 +1,148 @@
-'use client'
+"use client";
 
-import styles from "./page.module.css"
-import React, {useCallback, useEffect, useState} from "react";
+import styles from "./page.module.css";
+import React, { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import DateRangePicker from "@/components/DateRangePicker/DateRangePicker";
 import NightsCounter from "@/components/NightsCounter/NightsCounter";
 import CityList from "@/components/CityList/CityList";
 import ActivityList from "@/components/ActivityList/ActivityList";
-import {addTravel} from "@/database";
+import { addTravel } from "@/database";
 
 export default function PlanTravels() {
-  // cookie
-  const [cookies, setCookie] = useCookies(['user'])
-  const [showUserForm, setShowUserForm] = useState(true);
+    // cookie
+    const [cookies, setCookie] = useCookies(["user"]);
+    const [showUserForm, setShowUserForm] = useState(true);
 
-  // Updates state on client after mount
-  useEffect(() => {
-    setShowUserForm(!cookies.user);
-  }, [cookies.user]);
-  
-  // useStates 
-  const [selectedCity, setSelectedCity] = useState('Stockholm');
-  const [dateRange, setDateRange] = useState({ start: new Date(), end: new Date() });
-  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
-  const [nights, setNights] = useState(1);
-  const [notes, setNotes] = useState('');
-  
-  // Handles show form if user is not present
-  const handleUserFormSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const name = (event.target as any)['name'].value;
-    const email = (event.target as any)['email'].value;
-    setCookie('user', { name, email }, { path: '/' });
-    setShowUserForm(false);
-  }
-  
-  
-  // Handles city selection
-  const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCity(() => event.target.value);
-    setDateRange(() => ({ start: new Date(), end: new Date() }));
-    setSelectedActivities(() => []);
-    setNights(() => 1);
-    setNotes(() => '');
-  }
-  
-  // Handles date range selection
-  const handleDateRangeChange = useCallback((range: {start: Date, end: Date }) => {
-    setDateRange(range)
-  }, []);
-  
-  // Handels activity selection
-  const handleActivitiesChange = (activity: string, checked: boolean) => {
-    if (checked) {
-      setSelectedActivities(prevActivities => [...prevActivities, activity]);
-    } else {
-      setSelectedActivities(prevActivities => prevActivities.filter(a => a !== activity))
-    }
-  }
-  
-  // Handles selected nights
-  const handleNightsChange = (nights: number) => {
-    setNights(nights)
-  }
-  
-  // Handles nots change
-  const handleNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNotes(event.target.value)
-  }
-  
-  // Handle submit to DB on save
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const travelPlan =  {
-      user: cookies.user,
-      city: selectedCity, 
-      activity: selectedActivities, 
-      nights, dateRange, 
-      notes 
-    }
-    addTravel(travelPlan).then(id => {
-      console.log('Added: ', id);
-    });
-  }
+    // Updates state on client after mount
+    useEffect(() => {
+        setShowUserForm(!cookies.user);
+    }, [cookies.user]);
 
-  return (
-      <div className={styles.planTravels}>
-        {showUserForm ? (
-            <form onSubmit={handleUserFormSubmit}>
-              <label>
-                Name:
-                <input type="text" name="name" required/>
-              </label>
-              <label>
-                Email:
-                <input type="email" name="email" required/>
-              </label>
-              <button type="submit">Submit</button>
-            </form>
+    // useStates
+    const [selectedCity, setSelectedCity] = useState("Stockholm");
+    const [dateRange, setDateRange] = useState({ start: new Date(), end: new Date() });
+    const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+    const [nights, setNights] = useState(1);
+    const [notes, setNotes] = useState("");
 
-        ) : (
-          <>  
-        <h2>Plan Travels</h2>
+    // Handles show form if user is not present
+    const handleUserFormSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        const name = (event.target as any)["name"].value;
+        const email = (event.target as any)["email"].value;
+        setCookie("user", { name, email }, { path: "/" });
+        setShowUserForm(false);
+    };
 
-        <form onSubmit={handleSubmit}>
-          <h3>Where are you going {cookies.user.name}?</h3>
-          <CityList handleCityChange={handleCityChange}/>
+    // Handles city selection
+    const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCity(() => event.target.value);
+        setDateRange(() => ({ start: new Date(), end: new Date() }));
+        setSelectedActivities(() => []);
+        setNights(() => 1);
+        setNotes(() => "");
+    };
 
-          <h3>When will you be there?</h3>
-          <DateRangePicker key={`datePicker-${selectedCity}`} handleDateRangeChange={handleDateRangeChange} />
+    const handleDateRangeChange = useCallback((range: { start: Date; end: Date }) => {
+        console.log("Date range changed: ", range);
+        setDateRange(range);
+        if (range.start && range.end) {
+            const diffInTime = range.end.getTime() - range.start.getTime();
+            const diffInDays = diffInTime / (1000 * 3600 * 24);
+            const nights = Math.ceil(diffInDays);
+            console.log("Updating nights due to date range change: ", nights);
+            setNights(nights);
+        }
+    }, []);
 
-            <h3>What activity are you going to do?</h3>
-            <ActivityList key={`activityList-${selectedCity}`} selectedCity={selectedCity} handleActivitiesChange={handleActivitiesChange}/>
+    const handleNightsChange = (nights: number) => {
+        console.log("Nights updated: ", nights);
+        setNights(nights);
+    };
 
-            <h3>How many nights are you staying?</h3>
-            <NightsCounter key={`nightsCounter-${selectedCity}`} selectedCity={selectedCity} handleNightsChange={handleNightsChange} />
+    // Handels activity selection
+    const handleActivitiesChange = (activity: string, checked: boolean) => {
+        if (checked) {
+            setSelectedActivities((prevActivities) => [...prevActivities, activity]);
+        } else {
+            setSelectedActivities((prevActivities) => prevActivities.filter((a) => a !== activity));
+        }
+    };
 
-            <h3>Notes for your trip.</h3>
-            <textarea key={selectedCity} onChange={handleNotesChange}></textarea>
-            <br />
-            <button type="submit">Save</button>
-          </form>
-          </>
-      )}
-      </div>
-  )
+    // Handles nots change
+    const handleNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNotes(event.target.value);
+    };
+
+    // Handle submit to DB on save
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        const travelPlan = {
+            user: cookies.user,
+            city: selectedCity,
+            activity: selectedActivities,
+            nights,
+            dateRange,
+            notes,
+        };
+        console.log("Submitting travel plan: ", travelPlan);
+        addTravel(travelPlan).then((id) => {
+            console.log("Added: ", id);
+        });
+    };
+
+    return (
+        <div className={styles.planTravels}>
+            {showUserForm ? (
+                <form onSubmit={handleUserFormSubmit}>
+                    <label>
+                        Name:
+                        <input type="text" name="name" required />
+                    </label>
+                    <label>
+                        Email:
+                        <input type="email" name="email" required />
+                    </label>
+                    <button type="submit">Submit</button>
+                </form>
+            ) : (
+                <>
+                    <h2>Plan Travels</h2>
+
+                    <form onSubmit={handleSubmit}>
+                        <h3>Where are you going {cookies.user.name}?</h3>
+                        <CityList handleCityChange={handleCityChange} />
+
+                        <h3>When will you be there?</h3>
+                        <DateRangePicker
+                            key={`datePicker-${selectedCity}`}
+                            handleDateRangeChange={handleDateRangeChange}
+                            handleNightsChange={handleNightsChange}
+                        />
+
+                        <h3>What activity are you going to do?</h3>
+                        <ActivityList
+                            key={`activityList-${selectedCity}`}
+                            selectedCity={selectedCity}
+                            handleActivitiesChange={handleActivitiesChange}
+                        />
+
+                        <h3>How many nights are you staying?</h3>
+                        <NightsCounter
+                            key={`nightsCounter-${selectedCity}`}
+                            selectedCity={selectedCity}
+                            nights={nights}
+                            handleNightsChange={handleNightsChange}
+                        />
+
+                        <h3>Notes for your trip.</h3>
+                        <textarea key={selectedCity} onChange={handleNotesChange}></textarea>
+                        <br />
+                        <button type="submit">Save</button>
+                    </form>
+                </>
+            )}
+        </div>
+    );
 }
