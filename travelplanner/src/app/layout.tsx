@@ -4,28 +4,25 @@ import styles from "./RootLayout.module.css";
 import Header from "../components/layout/Header/Header";
 import Footer from "../components/layout/Footer/Footer";
 
-
 export const metadata: Metadata = {
-  title: "Travelplanner",
-  description: "Plan your next trip with Travelplanner",
+    title: "Travelplanner",
+    description: "Plan your next trip with Travelplanner",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <Header />
-        <main className={styles.main}>
-          <div className="container">
-            {children}
-          </div>
-        </main>
-        <Footer />
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body>
+                <Header />
+                <main className={styles.main}>
+                    <div className="container">{children}</div>
+                </main>
+                <Footer />
+            </body>
+        </html>
+    );
 }

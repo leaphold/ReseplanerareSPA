@@ -1,12 +1,16 @@
 "use client";
-
-import styles from "./page.module.css";
+// Imports CSS module for styling specific to the travels planning components.
+import styles from "./PlanTravels.module.css";
+// Imports necessary React components and hooks.
 import React, { useCallback, useEffect, useState } from "react";
+// Imports hook for managing cookies.
 import { useCookies } from "react-cookie";
+// Imports various components for handling date ranges, counting nights, listing cities, and activities.
 import DateRangePicker from "@/components/DateRangePicker/DateRangePicker";
 import NightsCounter from "@/components/NightsCounter/NightsCounter";
 import CityList from "@/components/CityList/CityList";
 import ActivityList from "@/components/ActivityList/ActivityList";
+// Imports a function from a custom database handling module to add travel plans.
 import { addTravel } from "@/database";
 
 export default function PlanTravels() {
@@ -47,6 +51,7 @@ export default function PlanTravels() {
         setIsSaved(() => false);
     };
 
+    // Updates the date range and calculates nights based on the selected dates.
     const handleDateRangeChange = useCallback((range: { start: Date; end: Date }) => {
         setDateRange(range);
         if (range.start && range.end) {
@@ -56,7 +61,7 @@ export default function PlanTravels() {
             setNights(nights);
         }
     }, []);
-
+    // Updates the count of nights directly.
     const handleNightsChange = (nights: number) => {
         setNights(nights);
     };
@@ -70,7 +75,7 @@ export default function PlanTravels() {
         }
     };
 
-    // Handles nots change
+    // Handles notes change
     const handleNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setNotes(event.target.value);
     };
@@ -96,7 +101,7 @@ export default function PlanTravels() {
             }, 3000);
         });
     };
-
+    // Conditionally renders the form to collect user data or the full travel planning interface.
     return (
         <div className={styles.planTravels}>
             {showUserForm ? (

@@ -39,10 +39,13 @@ export default function ListMyTravels() {
 
     return (
         <div>
-            <h1>My Planned Travels</h1>
-            <h2>Traveler: {cookies.user?.name} </h2>
-            <h2>Email: {cookies.user?.email}</h2>
-            <h2>{Deletemessage}</h2>
+            <div>
+                <h1>My Planned Travels</h1>
+                <h2>Traveler: {cookies.user?.name} </h2>
+                <h2>Email: {cookies.user?.email}</h2>
+                <h2>{Deletemessage}</h2>
+            </div>
+
             {!cookies.user && <UserForm onUserSubmit={handleUserSubmit} />}
             <ul>
                 {travels.map((travel) => (

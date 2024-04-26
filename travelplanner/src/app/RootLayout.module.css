@@ -1,5 +1,29 @@
 .main {
+    background-color: #f0f1e3;
+    padding: 20px;
+    margin: 0;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    padding: 10vh 20px;
+
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+
+    border-radius: 10px;
+    overflow: auto;
+    scrollbar-width: none; /* För Firefox */
+}
+
+.main::-webkit-scrollbar {
+    display: none; /* För Chrome, Safari och Opera */
+}
+
+.container {
+    width: 100%; /* Anpassa bredden beroende på ditt layoutbehov */
     display: flex;
     flex-direction: column;
     align-items: center;
