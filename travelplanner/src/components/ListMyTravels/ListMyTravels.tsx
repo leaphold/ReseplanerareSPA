@@ -24,7 +24,7 @@ export default function ListMyTravels() {
             });
         }
     }, [cookies.user]);
-
+    //handles delete travel
     const handleDelete = (id: number) => {
         setTravels(travels.filter((travel) => travel.id !== id));
         setShowDeleteMessage("Travel Deleted");
@@ -32,14 +32,16 @@ export default function ListMyTravels() {
             setShowDeleteMessage("");
         }, 3000);
     };
-
+    // handles user submit
     const handleUserSubmit = (user: { name: string; email: string }) => {
+        //store user info in cookies
         setCookie("user", user, { path: "/" });
     };
 
+    // rendering the user interface.
     return (
         <div>
-            <div>
+            <div className="planned-container">
                 <h1>My Planned Travels</h1>
                 <h2>Traveler: {cookies.user?.name} </h2>
                 <h2>Email: {cookies.user?.email}</h2>

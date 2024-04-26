@@ -9,15 +9,6 @@ a {
     color: black;
 }
 
-.planned-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: 2rem;
-}
-
 Button {
     cursor: pointer;
     font-size: 1.2rem;
@@ -36,10 +27,19 @@ Button:hover {
 }
 
 ul {
-    justify-content: space-between;
+    padding: 10px;
+}
+.planned-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 20px;
-    margin: 2rem;
+    justify-content: center;
+    text-align: center;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
 }
 
 li {
